@@ -7,10 +7,11 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable;
+    use HasApiTokens, HasFactory, Notifiable, HasRoles;
 
     /**
      * The attributes that are mass assignable.
@@ -18,9 +19,18 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
+        'title_name',
         'name',
+        'last_name',
+        'mobile_number',
         'email',
         'password',
+        'role_id',
+        'status',
+        'user_facebook',
+        'user_linkedin',
+        'province_id',
+
     ];
 
     /**
@@ -41,4 +51,49 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    /**
+     * Get the user's full name.
+     *
+     * @return string
+     */
+    public function getFullNameAttribute()
+    {
+        return "{$this->title_name} {$this->name} {$this->last_name}";
+    }
+
+
+
+    public function post()
+    {
+        return $this->hasMany(Post::class);
+    }
+
+    public function event()
+    {
+        return $this->hasMany(Event::class);
+    }
+
+    public function education()
+    {
+        return $this->hasMany(Education::class);
+    }
+
+    public function work()
+    {
+        return $this->hasMany(Work::class);
+    }
+    public function province()
+    {
+        return $this->belongsTo(Province::class);
+    }
+
+    public function participant()
+    {
+        return $this->hasMany(Participant::class);
+    }
 }
+
+
+
+
