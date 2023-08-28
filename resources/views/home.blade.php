@@ -1,9 +1,9 @@
-@extends('welcome');
+@extends('welcome')
 
 @section('title', 'Home page')
 @section('mainContent')
 <div>
-    <div class="mt-1">
+    <div class="mt-2">
         <main>
             <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
                 <div class="carousel-indicators">
@@ -70,8 +70,8 @@
                             <div  class="card h-100 shadow">
                                 <a href="#"><img src="{{asset($post->post_image)}}" class="card-img-top" alt="" height="250px"></a>
                                 <div class="card-body">
-                                    <h5 style="color: #0F75BC;" class="card-title">{{ $post->post_title }}</h5>
-                                    <p class="card-text">{{ $post->description }}</p>
+                                    <h5 style="color: #0F75BC;" class="card-title text-truncate">{{ $post->post_title }}</h5>
+                                    <div style="height: 150px" class="card-text text-truncate" >{!! $post->description !!}</div>
                                     <div>
                                         <a style="color: #0F75BC" class="nav-link stretched-link" id="textMore" href="{{ route('postHome.showPost',$post->id ) }}">อ่านเพิ่มเติ่ม</a>
                                     </div>
@@ -155,7 +155,7 @@
                                                 <a href="#"><img src="{{asset($eventList->event_image_cover)}}" class="card-img-top" alt="" height="250px"></a>
                                                 <div class="card-body">
                                                     <h5 style="color: #0F75BC;" class="card-title fw-semibold">{{ $eventList->event_title }}</h5>
-                                                    <p class="card-text">{{ $eventList->description }}</p>
+                                                    <div style="height: 150px" class="card-text text-truncate" >{!! $eventList->description !!}</div>
                                                     <div>
                                                         <div style="color: #0F75BC" class=" card-text"><h6>วันที่เริ่ม : {{ $eventList->event_start }}</h6><h6>วันที่สิ้นสุด : {{ $eventList->event_end }}</h6></div>
                                                     </div>
@@ -178,8 +178,8 @@
                                 @forelse($event as $eventHlist)
                                         <div class="bg-white shadow-sm " >
                                             <div class=" nav-link">
-                                                <a style="color: #0F75BC" class="nav-link tretched-link " href= "{{ route('eventHome.showEvent',$eventHlist->id) }}">
-                                                    <span class="fs-5 fw-semibold text-truncate mb-2">{{ $eventHlist->event_title }}</span>
+                                                <a style="color: #0F75BC" class="nav-link tretched-link text-truncate" href= "{{ route('eventHome.showEvent',$eventHlist->id) }}">
+                                                    <span class="fs-5 mb-2 text-truncate  ">{{ $eventHlist->event_title }}</span>
                                                     <div  class="fw-semibold"><h6>วันที่เริ่ม: {{ $eventHlist->event_start }} </h6><h6>วันที่สิ้นสุด:{{ $eventHlist->event_end }}</h6> </div>
                                                 </a>
                                             </div>

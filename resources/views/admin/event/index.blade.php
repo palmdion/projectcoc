@@ -6,7 +6,7 @@
 
 
         <div class="d-sm-flex align-items-center justify-content-between mb-4">
-            <h1 class="h3 mb-0 text-gray-800">ตารางข้อมูลกิจกรรม</h1>
+            <h1 class="h3 mb-0 text-gray-800">กิจกรรมทั้งหมด   </h1>
         </div>
 
         <div class="py-3">
@@ -34,16 +34,16 @@
                                 <th width="">รูปปกกิจกรรม</th>
                                 <th width="">วันที่เริ่ม</th>
                                 <th width="">วันที่สิ้นสุด</th>
-                                <th width="20%">Action</th>
+                                <th width="20%" >Action</th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach ($events as $event)
-                                <tr>
+                                <tr >
                                     <td>{{ $event->id }}</td>
                                     <td>{{ $event->user->name }} </td>
-                                    <td class="text-truncate" style="max-width: 150px;">{{ $event->event_title }}</td>
-                                    <td class="text-truncate" style="max-width: 100px;">{{ $event->description }}</td>
+                                    <td class="text-truncate" style="max-width: 150px">{{ $event->event_title }}</td>
+                                    <td class="text-truncate"  id="description-text">{!! $event->description !!}</td>
                                     <td>
                                         <img width="100px" height="50px" src="{{ asset($event->event_image_cover) }}"
                                             alt="">
@@ -63,6 +63,9 @@
                                                 ลบ
                                             </button>
                                         </form>
+                                            <a href="{{ route('event.export', $event->id) }}" class="btn  btn-success m-2">
+                                                 Export
+                                            </a>
                                     </td>
                                 </tr>
                             @endforeach

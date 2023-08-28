@@ -1,4 +1,4 @@
-@extends('welcome');
+@extends('welcome')
 
 @section('title', 'Post')
 @section('mainContent')
@@ -20,15 +20,25 @@
                 <div>
                     <h2 class="py-3 text-gray-700" id="textF">{{ $posts->post_title }}</h2>
                     <h6 class="mb-3 text-gray-700" id="textL" >{{ $posts->category ? $posts->category->pluck('cate_name')->first() : 'N/A' }}</h6>
+
                 </div>
                 <div class="mb-3">
                     <img  src="{{asset($posts->post_image)}}" class="card-img-top " height="500px"  alt="...">
                     <div class="card-body ">
 
-                        <p id="textF" style="min-height: 200px"
-                                class="mt-3 fw-semibold lh-lg fs-5 text-body text-break">{{ $posts->description }}</p>
-                        <p class="card-text"><small class="text-muted">{{ $posts->tag ? $posts->tag->pluck('tag_name')->first() : 'N/A' }}</small></p>
+                        <p id="textF"
+                                class="mt-3 fw-semibold lh-lg fs-5 text-body text-break">{!! $posts->description !!}</p>
+                                <br>
+                                <h6 class="card-text">
+                                    <p class="card-text ">
+                                    <div class="d-flex ">
+                                        {{-- @foreach ($posts->tag as $tag )
+                                        <p class="text-muted p-2">#{{ $tag->tag_name}}</p>
+                                        @endforeach --}}
+                                    </div>
+                                </p></h6>
                     </div>
+                    <br>
                 </div>
             </div>
             <div class="col-md-3">

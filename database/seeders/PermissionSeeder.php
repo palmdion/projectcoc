@@ -29,7 +29,7 @@ class PermissionSeeder extends Seeder
             'permission-create',
             'permission-edit',
             'permission-delete',
-            'education-list',
+
         ];
 
         foreach($permissions as $permission){

@@ -25,12 +25,9 @@
             <div class="card-body">
                 <div class="form-group row">
 
-                    <div class="col-md-12 mb-3 mt-3">
-                        <p>ตัวอย่างรูปแบบที่กำหนด <a href="{{ asset('files/coc.data-sheet.csv') }}" target="_blank">ตัวอย่างรูปแบบ CSV</a></p>
-                    </div>
                     {{-- File Input --}}
                     <div class="col-sm-12 mb-3 mt-3 mb-sm-0">
-                        <label class="mb-2">อัปโหลดไฟล์ (เอกสารข้อมูล)</label>
+                        <label class="mb-2">อัปโหลดไฟล์ (เอกสารข้อมูล .csv .xlsx)</label>
                         <input
                             type="file"
                             class="form-control form-control-user @error('file') is-invalid @enderror"

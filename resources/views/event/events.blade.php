@@ -1,10 +1,10 @@
-@extends('welcome');
+@extends('welcome')
 
 @section('title', 'Event')
 @section('mainContent')
 
 <div>
-    <div class="container-fluid  bg-white">
+    <div class="container-fluid">
         <nav aria-label="breadcrumb" id="textL">
             <ol class="breadcrumb">
               <a class="breadcrumb-item nav-link" href="{{ route('home') }}">หน้าหลัก</a>
@@ -17,10 +17,12 @@
         </div>
     </div>
     <br>
-    @hasanyrole(['Admin','Staff'])
-    <div class="container">
+    @hasanyrole([1,2,3])
+    @if (auth()->user()->role_id == 1 || auth()->user()->alumni == 1)
+    <div class="container mb-2">
         <a class="btn btn-outline-primary" href="{{ route('eventHome.eventAdd') }}">สร้างกิจกรรม</a>
     </div>
+    @endif
     @endhasanyrole
     <div id="line"></div>
     <br>
@@ -29,15 +31,15 @@
             @forelse($events as $event)
                 <div class="col" >
                     <div  class="card h-100 shadow">
-                        <a href="#"><img src="{{asset($event->event_image_cover)}}" class="card-img-top" alt="" height="250px"></a>
+                        <a href="#"><img src="{{asset($event->event_image_cover)}}" class="card-img-top" alt="" width="" height="250px"></a>
                         <div class="card-body">
-                            <h5 style="color: #0F75BC;" class="card-title">{{ $event->event_title }}</h5>
-                            <p class="card-text text-truncate">{{ $event->description }}</p>
+                            <h5 style="color: #0F75BC;" style="max-width: 200px" class="card-title text-truncate mb-2">{{ $event->event_title }}</h5>
+                            <div style="height: 150px" class="card-text text-truncate" >{!! $event->description !!}</div>
                             <span>
                                 <p class="card-text text-truncate">{{ $event->event_start }} - {{ $event->event_end }}</p>
                             </span>
                             <div>
-                                <a style="color: #0F75BC" class="nav-link stretched-link" id="textMore" href="{{ route('eventHome.showEvent',$event->id) }}">อ่านเพิ่มเติ่ม</a>
+                                <a style="color: #0F75BC" class="nav-link stretched-link" id="textMore" href="{{ route('eventHome.showEvent',$event->id) }}">อ่านเพิ่มเติม</a>
                             </div>
                         </div>
                     </div>

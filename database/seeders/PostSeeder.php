@@ -12,17 +12,6 @@ use App\Models\Province;
 
 class PostSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     *
-     * @return void
-     */
-    public function run()
-    {
-
-        Province::create([
-            'province_name'    => 'เป็นคนทุกที่',
-        ]);
-    }
+    //
 
 }

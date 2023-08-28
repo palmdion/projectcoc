@@ -14,7 +14,6 @@ return new class extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            //
             $table->boolean('alumni')->default(0);
         });
     }

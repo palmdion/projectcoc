@@ -9,7 +9,8 @@ class Education extends Model
     use HasFactory;
     protected $fillable = [
         'user_id',
-        'depart_id',
+        'degreeName',
+        'departName',
         'student_number',
         'education_start',
         'education_end',
@@ -20,10 +21,5 @@ class Education extends Model
     public function user()
     {
         return $this->belongsTo(User::class);
-    }
-
-    public function depart()
-    {
-        return $this->belongsTo(Department::class);
     }
 }

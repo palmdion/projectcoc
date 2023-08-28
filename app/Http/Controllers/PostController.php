@@ -41,8 +41,8 @@ class PostController extends Controller
     public function create()
     {
         $categories = Category::all();
-        $tags = Tag::all();
-        return view('admin.posts.create',['categories' => $categories ,'tags' => $tags,]);
+        // $tags = Tag::all();
+        return view('admin.posts.create',['categories' => $categories ]);
     }
 
     public function store(Request $request)
@@ -67,18 +67,18 @@ class PostController extends Controller
             $post->post_title = $request->post_title;
             $post->post_image = $image_path;
             $post->description = $request->description;
-            $post->is_approved = $request->is_approved;
-            $post->status = $request->status;
+            // $post->is_approved = $request->is_approved;
+            // $post->status = $request->status;
             $post->save();
 
             //ซิงค์ category
-            
+
             $categories = $request->input('categories');
             $post->category()->sync($categories);
 
-            //ซิงค์ tag
-            $tags = $request->input('tags');
-            $post->tag()->sync($tags);
+            // //ซิงค์ tag
+            // $tags = $request->input('tags');
+            // $post->tag()->sync($tags);
 
             $image -> move($image_location,$image_name);
             return redirect()->route('posts.indexPost')->with('success','Post created successfully.');
@@ -135,8 +135,8 @@ class PostController extends Controller
     {
         $post = Post::with('user')->find($id);
         $categories = Category::all();
-        $tags = Tag::all();
-        return view('admin.posts.edit', ['post' => $post, 'categories' => $categories, 'tags' => $tags]);
+        // $tags = Tag::all();
+        return view('admin.posts.edit', ['post' => $post, 'categories' => $categories]);
     }
 
 
@@ -168,17 +168,17 @@ class PostController extends Controller
                 $post->post_title = $request->post_title;
                 $post->post_image = $image_path;
                 $post->description = $request->description;
-                $post->is_approved = $request->is_approved;
-                $post->status = $request->status;
+                // $post->is_approved = $request->is_approved;
+                // $post->status = $request->status;
                 $post->save();
 
                 //ซิงค์ category
                 $categories = $request->input('categories');
                 $post->category()->sync($categories);
 
-                //ซิงค์ tag
-                $tags = $request->input('tags');
-                $post->tag()->sync($tags);
+                // //ซิงค์ tag
+                // $tags = $request->input('tags');
+                // $post->tag()->sync($tags);
 
                 //ลบภาพเก่า
                 $image_old = $request->image_old;
@@ -200,17 +200,17 @@ class PostController extends Controller
            $post->user_id = Auth::id();
            $post->post_title = $request->post_title;
            $post->description = $request->description;
-           $post->is_approved = $request->is_approved;
-           $post->status = $request->status;
+        //    $post->is_approved = $request->is_approved;
+        //    $post->status = $request->status;
            $post->save();
 
            //ซิงค์ category
            $categories = $request->input('categories');
            $post->category()->sync($categories);
 
-           //ซิงค์ tag
-           $tags = $request->input('tags');
-           $post->tag()->sync($tags);
+        //    //ซิงค์ tag
+        //    $tags = $request->input('tags');
+        //    $post->tag()->sync($tags);
 
            return redirect()->route('posts.indexPost')->with('success','Post update successfully.');
            }catch (\Throwable $th) {
@@ -225,8 +225,8 @@ class PostController extends Controller
     {
         $posts = Post::find($id);
         $categories = Category::all();
-        $tags = Tag::all();
-        return view('admin.posts.show',['categories' => $categories ,'tags' => $tags,'posts' => $posts]);
+        // $tags = Tag::all();
+        return view('admin.posts.show',['categories' => $categories,'posts' => $posts]);
     }
 
     public function delete(Post $post, $id)
@@ -235,13 +235,13 @@ class PostController extends Controller
             $img = Post::find($id)->post_image;
             unlink($img);
             $post->category()->detach();
-            $post->tag()->detach();
+            // $post->tag()->detach();
             $post->delete();
             $delete = Post::find($id)->delete();
         }
         else{
             $post->category()->detach();
-            $post->tag()->detach();
+            // $post->tag()->detach();
             $post->delete();
             $delete = Post::find($id)->delete();
         }

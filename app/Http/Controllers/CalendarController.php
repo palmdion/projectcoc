@@ -22,6 +22,8 @@ use App\Models\Participant;
 use App\Models\Attachment;
 use App\Models\UserEvent;
 
+use App\Exports\UserEventExport;
+use Maatwebsite\Excel\Facades\Excel;
 
 class CalendarController extends Controller
 {
@@ -259,6 +261,10 @@ class CalendarController extends Controller
         return redirect()->route('event.index')->with('success','Event deleted successfully.');
     }
 
+    public function export(Event $event)
+    {
+        return Excel::download(new UserEventExport($event), 'export.xlsx');
+    }
 
     public function joinEvent(Request $request){
         $id = $request->eventId;
@@ -272,10 +278,18 @@ class CalendarController extends Controller
     }
 
     public function joinEventH(Request $request){
+        $aluniStatus = User::find(Auth::id());
         $id = $request->eventId;
         $join = new UserEvent();
         $join->event_id = $id;
         $join->user_id = Auth::id();
+        if($aluniStatus->alumni ==  1)
+        {
+            $join->status = 1;
+        }
+        else{
+            $join->status = 0;
+        }
         $join->save();
 
 
@@ -289,16 +303,24 @@ class CalendarController extends Controller
         $userEvent = UserEvent::where('event_id', $id)->get();
         $check = UserEvent::where('event_id', $id)->where('user_id',Auth::id())->get();
         $btnStatus = 0;
+        $aluniStatus = User::find(Auth::id());
         if(count($check) == 0){
             $btnStatus = 1;
         }else{
-            $btnStatus = 2;
-        }
 
+            if($aluniStatus->alumni == 0){
+                $btnStatus = 4;
+            }else{
+                $btnStatus = 2;
+            }
+        }
+        //ตรวจสอบวันที่สิ้นสุดกิจกรรม
         if(Carbon::parse($event->event_end)->addDays(1) < Carbon::now()){
             $btnStatus = 3;
         }
 
         return view('admin.event.show', ['event' => $event, 'btnStatus' => $btnStatus , 'user' => $user,'userEvent' => $userEvent]);
     }
+
+
 }

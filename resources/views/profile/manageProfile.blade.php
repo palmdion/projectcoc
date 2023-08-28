@@ -11,18 +11,20 @@
 
     <!-- Alert Messages -->
     @include('admin.alert')
-    <div class="mb-4">
+    {{-- <div class="mb-4">
         <a class="btn btn-outline-primary  " href="{{ route('profile.profileFace') }}">โปรไฟล์ของฉัน</a>
-        <a class="btn btn-outline-primary active" href="{{ route('profile.manageProfile') }}">แก้ไขโปรไฟล์</a>
-        @if (auth()->user()->alumni == 1)
+
+        @if (auth()->user()->alumni == 1 || auth()->user()->role_id == 1)
             <a class="btn btn-outline-primary" href="{{ route('profile.myPosts') }}">ข่าวสารของฉัน</a>
         @endif
-        @hasanyrole(['Staff', 'Admin'])
+        @if (auth()->user()->alumni == 1 || auth()->user()->role_id == 1)
             <a class="btn btn-outline-primary" href="{{ route('profile.myEvent') }}">กิจกรรมของฉัน</a>
-        @endhasanyrole
+        @endif
+    </div> --}}
+    <div class="d-flex  p-3 ">
+        <div><a class="btn btn-secondary  " href="{{ route('profile.profileFace') }}">กลับ</a></div>
     </div>
-    <div id="line"></div>
-
+    <br>
     {{-- Change Password --}}
     <div class="p-3 ">
         <form action="{{ route('profile.change-password') }}" method="POST">
@@ -80,7 +82,7 @@
                     <div class="col-sm-4 mb-3 mt-3 mb-sm-0">
                         <label class="mb-2" for="title_name">คำนำหน้า</label>
                         <input type="text" class="form-control form-control-user" id="title_name"
-                            placeholder="กรอรคำนำหน้า" name="title_name"
+                            placeholder="กรอกคำนำหน้า" name="title_name"
                             value="{{ old('title_name') ? old('title_name') : auth()->user()->title_name }}">
                         @error('title_name')
                             <span class="text-danger">{{ $message }}</span>
@@ -159,10 +161,10 @@
                     <div class="col-sm-4 mb-3 mt-3 mb-sm-0">
                         <label class="mb-2" for="gender">เพศ</label>
                         <select class="form-control " name="gender" id="gender">
-                            <option>เลือกเพศ</option>
-                            <option value="ไม่บอก">ไม่บอก</option>
-                            <option value="ชาย">ชาย</option>
-                            <option value="หญิง">หญิง</option>
+
+                            <option >ไม่บอก</option>
+                            <option >ชาย</option>
+                            <option >หญิง</option>
                         </select>
                         @error('gender')
                             <span class="text-danger">{{ $message }}</span>
@@ -175,7 +177,7 @@
                         <label class="mb-2" for="blood_type">หมู่เลือด</label>
                         <input type="text"
                             class="form-control form-control-user @error('blood_type') is-invalid @enderror"
-                            id="blood_type" placeholder="หมู่เลือด (เอ หรือ A)" name="blood_type"
+                            id="blood_type" placeholder="หมู่เลือด เช่น (เอ หรือ A)" name="blood_type"
                             value="{{ old('blood_type') ? old('blood_type') : auth()->user()->blood_type }}">
 
                         @error('blood_type')
@@ -252,7 +254,7 @@
     <div id="line"></div>
 
 
-    @if (auth()->user()->alumni)
+    {{-- @if (auth()->user()->alumni)
 
         <div>
             <div class="mb-3">
@@ -276,8 +278,7 @@
                         @foreach ($education as $edu)
                             <tr>
                                 <td>{{ $edu->education_end }}</td>
-                                <td>{{ $edu->depart->degree_fullName }}</td>
-                                <td>{{ $edu->depart->depart_fullName }}</td>
+
                                 <td>{{ $edu->faculty }}</td>
                                 <td>{{ $edu->university }}</td>
                                 <td>
@@ -297,76 +298,62 @@
                 </table>
 
             </div>
-        </div>
+        </div> --}}
         <!-- เพิ่มข้อมูลการศึกษา -->
-        <div class="p-3 ">
-            <div class="card">
-                <div class="card-header">
-                    เพิ่มการศึกษา
-                </div>
-                <div class="card-body">
-                    <table id="myTable" class="display">
-                        <thead>
-                            <tr>
-                                <th>ระดับปริญญา</th>
-                                <th>หลักสูตร</th>
-                                <th>เลือก</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach ($department as $depart)
-                                <tr>
-                                    <td>{{ $depart->degree_fullName }}</td>
-                                    <td>{{ $depart->depart_fullName }}</td>
-                                    <td>
-                                        <form action="{{ route('profile.addEducation') }}" method="POST">
-                                            @csrf
-                                            <div class="form-group">
-                                                <label for="exampleInputEmail1">ชื่อคณะ</label>
-                                                <input type="text" class="form-control" name="faculty">
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="exampleInputEmail1">ชื่อมหาวิทยาลัย</label>
-                                                <input type="text" class="form-control" name="unverName"
-                                                    value="มหาวิทยาลัยขอนแก่น">
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="exampleInputEmail1">รหัสนักศึกษา</label>
-                                                <input type="text" class="form-control" name="studentId">
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="lean_start">เริ่มศึกษา</label>
-                                                <input type="number" class="form-control" name="start_lean"
-                                                    min="2400" max="2999" step="1" value="2566" />
-                                            </div>
+        {{-- <div class="p-3 ">
+            <div class="p-3 ">
+                <div class="card">
+                    <div class="card-header">
+                        เพิ่มการศึกษา
+                    </div>
+                    <div class="card-body">
+                        <form  action="{{ route('profile.addEducation') }}" method="POST">
+                            @csrf
+                            <div class="row g-3 align-items-center">
+                                <div class="form-group">
+                                    <label for="departId" class="form-label">ระดับการศึกษา</label>
 
-                                            <div class="form-group">
-                                                <label for="lean_end">จบการศึกษา</label>
-                                                <input type="number" class="form-control" name="end_lean"
-                                                    min="2400" max="2999" step="1" value="2566" />
-                                            </div>
-                                            <div style="text-align:center;">
-                                                <button class="btn btn-primary mt-2" name="departId"
-                                                    value="{{ $depart->id }}">เพิ่ม</button>
-                                            </div>
-                                        </form>
-                                    </td>
-                                </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="name_work" class="form-label">ชื่อคณะ/วิทยาลัย </label>
+                                    <input type="text" class="form-control" name="faculty" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="name_work" class="form-label">ชื่อมหาวิทยาลัย</label>
+                                    <input type="text" class="form-control" name="unverName"
+                                                    value="มหาวิทยาลัยขอนแก่น" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="name_work" class="form-label">รหัสนักศึกษา</label>
+                                    <input type="text" class="form-control" name="studentId" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="lean_start">เริ่มศึกษา</label>
+                                    <input type="number" class="form-control" name="start_lean"
+                                        min="2400" max="2999" step="1" value="2566" />
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="lean_end">จบการศึกษา</label>
+                                    <input type="number" class="form-control" name="end_lean"
+                                        min="2400" max="2999" step="1" value="2566" />
+                                </div>
+                                <div class="col-auto">
+                                    <button type="submit" class="btn btn-primary mb-3">ยืนยัน</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
     @else
         <!-- ยืนยันตัวตนศิษย์เก่า -->
         <div class="p-3 ">
-            <h4 id="textF">ข้อมูลการศึกษา</h4>
+            <h4 id="textF">ยืนยันตัวตนศิษย์เก่า</h4>
             <br>
             <div class="card">
-                <div class="card-header">
-                    ยืนยันตัวตนศิษย์เก่า
-                </div>
                 <div class="card-body">
                     <form action="{{ route('profile.verifyAlumni') }}" method="POST">
                         @csrf
@@ -394,9 +381,9 @@
                 </div>
             </div>
         </div>
-    @endif
+    @endif --}}
     <br>
-    <div id="line"></div>
+    {{-- <div id="line"></div>
     <br>
     <div>
         <div class="mb-3">
@@ -437,161 +424,7 @@
             </table>
 
         </div>
-    </div>
-    <div class="p-3 ">
-        <div class="card">
-            <div class="card-header">
-                เพิ่มการทำงาน
-            </div>
-            <div class="card-body">
-                <form action="{{ route('profile.addWork') }}" method="POST">
-                    @csrf
-                    <div class="row g-3 align-items-center">
-                        <div class="form-group">
-                            <label for="category" class="form-label">หมวดหมู่อาชีพ</label>
-                            <select class="form-control " name="categories" required>
-                                <option>เลือกหมวดหมู่</option>
-                                @foreach ($cateWork as $cate)
-                                    <option value="{{ $cate->id }}">{{ $cate->cateWork_name }}</option>
-                                @endforeach
-                            </select>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="name_work" class="form-label">ชื่องาน</label>
-                            <input class="form-control " type="text" name="name_work" value="" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="name_work" class="form-label">รายละเอียดงาน</label>
-                            <input class="form-control " type="text" name="work_detail" value="" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="name_work" class="form-label">ชื่อบริษัท</label>
-                            <input class="form-control " type="text" name="name_company" value="" required>
-                        </div>
-                        <div class="col-auto">
-                            <button type="submit" class="btn btn-primary mb-3">ยืนยัน</button>
-                        </div>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-
-    {{-- Page Content
-<div class="row">
-    <div class="col-md-3 border-right">
-        <div class="d-flex flex-column align-items-center  p-3 py-5">
-            <img class="rounded-2" width="300px" height="450px"  src="{{asset("")}}">
-
-            {{-- Quick Face
-            <div class="card w-100 shadow-md mt-3 d-flex">
-                <div class="d-sm-flex align-items-center justify-content-between border-bottom">
-                    <h1 class="h3 mb-0 text-gray-800 m-1">QUICK FACT</h1>
-                </div>
-                <div class="card-body">
-                    <div>
-                        <h5 class="h5 mb-0 text-gray-800 m-1">Class of:
-                            <span class="text-black-50">
-                                {{ auth()->user()->class_of ? auth()->user()->class_of->pluck('class_of')->first()
-                                : 'N/A' }}</span>
-                        </h5>
-                    </div>
-                    <div>
-                        <h5 class="h5 mb-0 text-gray-800 m-1">Academic:
-                            <span class="text-black-50">
-                                </span>
-                        </h5>
-                    </div>
-                    <div>
-                        <h5 class="h5 mb-0 text-gray-800 m-1">Degree:
-                            <span class="text-black-50">
-                                </span>
-                        </h5>
-                    </div>
-                </div>
-            </div>
-
-            {{-- Contact
-            <div class="card w-100 shadow-md mt-3 d-flex">
-                <div class="d-sm-flex align-items-center justify-content-between border-bottom">
-                    <h1 class="h3 mb-0 text-gray-800 m-1">CONTACT</h1>
-                </div>
-                <div class="card-body">
-                    <div>
-                        <h5 class="h5 mb-0 text-gray-800 m-1">Email:
-                            <span class="text-black-50">
-                                </span>
-                        </h5>
-                    </div>
-                    <div>
-                        <h5 class="h5 mb-0 text-gray-800 m-1">Social Media:
-                            <div>
-                                <span class="text-black-50">
-                                    Facebook
-                                </span>
-                                <span class="text-black-50">
-                                    LinkedIn
-                                </span>
-                            </div>
-                        </h5>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="col-md-9 border-right p-3 py-5">
-
-        {{-- Profile manu
-        <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
-            <li class="nav-item" role="presentation">
-              <button class="nav-link active" id="pills-home-tab" data-bs-toggle="pill"
-              data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home"
-              aria-selected="true">
-                Profile Face</button>
-            </li>
-            <li class="nav-item" role="presentation">
-              <button class="nav-link" id="pills-profile-tab" data-bs-toggle="pill"
-              data-bs-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile"
-              aria-selected="false">
-                <a href="{{-- route('profile.detail', $user->id) -">Manage Profile</a></button>
-            </li>
-            <li class="nav-item" role="presentation">
-              <button class="nav-link" id="pills-contact-tab" data-bs-toggle="pill"
-              data-bs-target="#pills-contact" type="button" role="tab"
-              aria-controls="pills-contact" aria-selected="false">
-                My Posts</button>
-            </li>
-            @hasrole('Staff')
-            <li class="nav-item" role="presentation">
-                <button class="nav-link" id="pills-event-tab" data-bs-toggle="pill"
-                data-bs-target="#pills-event" type="button" role="tab"
-                aria-controls="pills-event" aria-selected="false">
-                    Event</button>
-              </li>
-            @endhasrole
-          </ul>
-          <div class="tab-content" id="pills-tabContent">
-            <div class="tab-pane fade show active" id="pills-home" role="tabpanel"
-            aria-labelledby="pills-home-tab" tabindex="0">
-                <div class=""><span>คำนำหน้า-ชื่อ-สกุล</span></div>
-                <div class="border-bottom"><span>Highlight</span></div>
-                <div class=""><span>Category Work</span></div>
-                <div class=" "><span>Work Position</span></div>
-                <div class=" "><span>Decription Work</span></div>
-                <div class=" "><span>bio</span></div>
-            </div>
-            <div class="tab-pane fade" id="pills-profile" role="tabpanel"
-            aria-labelledby="pills-profile-tab" tabindex="0">
-                <div class="container-fluid">
-
-                </div>
-            </div>
-            <div class="tab-pane fade" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab" tabindex="0">...</div>
-            <div class="tab-pane fade" id="pills-event" role="tabpanel" aria-labelledby="pills-event-tab" tabindex="0">...</div>
-        </div>
-</div> --}}
-
+    </div> --}}
 
 
     <script>

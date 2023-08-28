@@ -1,7 +1,6 @@
 * {
     box-sizing: border-box;
     padding: 0 auto;
-
 }
 body {
     background:#FFFFFF;
@@ -60,6 +59,11 @@ body {
     font-weight: bold;
     text-shadow: 0 2px 5px rgba(12, 31, 70, 0.18);
     text-align: center;
+}
+
+#description-text {
+    display: flex;
+    max-width: 150px ;
 }
 /* ข่าวสารประชาสัมพันธ์ */
 #postBody #postTitle {

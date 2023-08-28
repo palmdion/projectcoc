@@ -26,7 +26,6 @@ class AdminSeeder extends Seeder
             'password'      =>  Hash::make('12345678'),
             'role_id'       => 1 ,
             'status'       => 1 ,
-            'province_id'    => 1 ,
         ]);
     }
 }

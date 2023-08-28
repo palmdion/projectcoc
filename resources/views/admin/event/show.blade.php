@@ -16,13 +16,13 @@
             <img height="400px" src="{{ asset($event->event_image_cover) }}" class="card-img-top" alt="...">
             <div class="card-body">
                 <h5 class="card-title" id="textL">{{ $event->event_title }}</h5>
-                <p class="card-text">{{ $event->description }}</p>
+                <p class="card-text">{!! $event->description !!}</p>
                 <h6 id="textL" class="mt-3">วันที่เริ่ม: {{ $event->event_start }} วันที่สิ้นสุด:
                     {{ $event->event_end }}</h6>
                 <br>
                 <div>
-                    @hasanyrole(['Admin', 'User'])
-                    @if (auth()->user()->alumni == 1)
+                    @hasanyrole([1,2])
+                    @if (auth()->user()->alumni == 1 || auth()->user()->role_id == 3)
                         @if ($btnStatus == 1)
                             <form method="POST" action="{{ route('eventHome.joinEventH') }}">
                                 @csrf

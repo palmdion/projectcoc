@@ -11,12 +11,14 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rules\Password;
 use Carbon\Carbon;
 
+use App\Models\UserAlumni;
+use App\Models\Alumni;
+use App\Models\User;
 use App\Models\Post;
 use App\Models\Attachment;
 use App\Models\Category;
 use App\Models\Tag;
 use App\Models\Event;
-use App\Models\User;
 use App\Models\UserEvent;
 
 
@@ -33,6 +35,14 @@ class HomeController extends Controller
         return view('recognition.users' ,compact('users'));
     }
     public function joinEventH(Request $request){
+
+        //$user = User::find(Auth::id())->get();
+
+        //if($user->alumni == 0 && $user->event == 0){
+           // return redirect()->route('eventHome.showEvent', $id)->with('error','Can not join event please contact Admin.');
+        //}
+
+
         $id = $request->eventId;
         $join = new UserEvent();
         $join->event_id = $id;
@@ -46,14 +56,19 @@ class HomeController extends Controller
     {
         $event = Event::find($id);
         $userEvent = UserEvent::where('event_id', $id)->get();
+        $userEventStatus = UserEvent::where('event_id', $id)->where('user_id',Auth::id())->where('status','=',1)->get();
         $check = UserEvent::where('event_id', $id)->where('user_id',Auth::id())->get();
         $btnStatus = 0;
+        $aluniStatus = User::find(Auth::id());
         if(count($check) == 0){
             $btnStatus = 1;
-        }else{
+        }
+        elseif(count($check) != 0 && $aluniStatus->alumni == 0 && count($userEventStatus) == 0){
+            $btnStatus = 4;
+        }
+        else{
             $btnStatus = 2;
         }
-
         if(Carbon::parse($event->event_end)->addDays(1) < Carbon::now()){
             $btnStatus = 3;
         }
@@ -61,6 +76,12 @@ class HomeController extends Controller
 
         return view('event.event', ['event' => $event, 'btnStatus' => $btnStatus,'user' => $user,'userEvent'=>$userEvent]);
     }
+
+    // public function test(Request $request ,$status) {
+    //     $userStatus = UserEvent::where('event_id', $id)->where('status',$status)->get();
+    //     return view('admin.event.show', ['userStatus' => $userStatus]);
+
+    // }
 
     public function showAllEvent()
     {
@@ -126,12 +147,13 @@ class HomeController extends Controller
         return redirect()->route('eventHome.showAllEvent')->with('success', 'Event created successfully.');
         }   catch (\Throwable $th) {
             DB::rollback();
-            return redirect()->route('eveeventHoment.eventAdd')->with('error',$th->getMessage());
+            return redirect()->route('eventHome.eventAdd')->with('error',$th->getMessage());
         }
     }
+   
     public function showAllPost()
     {
-        $posts = Post::orderBy('created_at', 'asc')->paginate(10);
+        $posts = Post::orderBy('created_at', 'desc')->paginate(10);
         $categories = Category::all();
         $tags = Tag::all();
         return view('post.posts',['categories' => $categories ,'tags' => $tags,'posts' => $posts]);
@@ -140,7 +162,7 @@ class HomeController extends Controller
     public function showPost($id)
     {
         $posts = Post::find($id);
-        $post = Post::orderBy('created_at', 'asc')->take(5)->get();
+        $post = Post::orderBy('created_at', 'desc')->take(5)->get();
         $categories = Category::all();
         $tags = Tag::all();
         return view('post.post',['categories' => $categories ,'tags' => $tags,'posts' => $posts,'post' => $post]);
@@ -199,7 +221,7 @@ class HomeController extends Controller
      */
     public function indexHome()
     {
-        $posts = Post::orderBy('created_at', 'asc')->take(3)->get();
+        $posts = Post::orderBy('created_at', 'desc')->take(3)->get();
         $events = Event::orderBy('created_at', 'desc')->take(1)->get();
         $event = Event::orderBy('created_at', 'desc')->take(3)->get();
         //$user = User::orderBy('created_at', 'desc')->take(4)->get();
@@ -238,4 +260,51 @@ class HomeController extends Controller
     {
          //
     }
+
+    public function indexRequest()
+    {
+        return view('sendRequest');
+
+    }
+    // public function indexSearch(Request $request)
+    // {
+    //     $keyword = $request->input('keyword');
+    //     $alumnis = Alumni::search($keyword)->get();
+
+    //     // $search_text = $_GET['queryAlumni'];
+    //     // $alumnis = Alumni::where('student_code','student_name_th', '%'. $search_text.'%')->get();
+    //      return view('search.indexSearch',compact('alumnis'));
+    // }
+
+    public function indexSearch(Request $request)
+    {
+        $user = User::all();
+        $keyword = $request->input('keyword');
+        // $keyword_D =  $request->input('keyword_degree');
+        // $keyword_Edu =  $request->input('keyword_edu');
+        // $caWork = CategoryWork::all();
+
+        $searchResult = UserAlumni::join('users','user_alumnis.user_id','=','users.id')
+                        ->leftJoin('alumnis','user_alumnis.alumni_id','=','alumnis.id')
+                        ->where('student_code', 'like', "%$keyword%")
+                        ->orWhere('student_name_th', 'like', "%$keyword%")
+                        ->orWhere('student_surname_th', 'like', "%$keyword%")
+                        ->orWhere('program_name', 'like', "%$keyword%")
+                        ->orWhere('faculty_name', 'like', "%$keyword%")
+                        ->orWhere('admit_year', 'like', "%$keyword%")
+                        ->get();
+
+        return view('search.indexSearch', ['searchResult' => $searchResult,'user' => $user]);
+
+        // $keyword = $request->input('keyword');
+        // $authorName = $request->input('author_name');
+        // $alumnis = Alumni::where('student_code', 'like', "%$keyword%")
+        //              ->whereHas('user', function ($query) use ($authorName) {
+        //                  $query->where('name', 'like', "%$authorName%");
+        //              })
+        //              ->get();
+        // return view('search.indexSearch', ['alumnis' => $alumnis]);
+    }
+
+
 }

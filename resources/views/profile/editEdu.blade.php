@@ -8,26 +8,13 @@
 
         <!-- Alert Messages -->
         @include('admin.alert')
-        <div class="mb-4">
-            <a class="btn btn-outline-primary  " href="{{ route('profile.profileFace') }}">โปรไฟล์ของฉัน</a>
-            <a class="btn btn-outline-primary active" href="{{ route('profile.manageProfile') }}">แก้ไขโปรไฟล์</a>
-            @if (auth()->user()->alumni == 1)
-                <a class="btn btn-outline-primary" href="{{ route('profile.myPosts') }}">ข่าวสารของฉัน</a>
-            @endif
-            @hasanyrole(['Staff', 'Admin'])
-                <a class="btn btn-outline-primary" href="{{ route('profile.myEvent') }}">กิจกรรมของฉัน</a>
-            @endhasanyrole
-        </div>
-        <br>
+
         <div class="d-sm-flex align-items-center justify-content-between mb-4">
             <h1 class="h3 mb-0 text-gray-800">แก้ไขประวัติการศึกษา</h1>
         </div>
         <div id="line"></div>
         <br>
-        <a class="btn btn-secondary  float-right" href="{{ route('profile.manageProfile') }}">กลับ</a>
-        <br>
-        <br>
-        <!-- ข้อมูลอีเว้นท์-->
+        <!-- -->
         <div class="card shadow mb-4">
             <div class="card-header py-3">
                 <h6 class="m-0 font-weight-bold text-primary">การศึกษา</h6>
@@ -38,14 +25,12 @@
                     @csrf
                     @method('PUT')
                     <div class="row card-body">
-                        <!-- depart -->
-                        <div class="col-sm-12 mb-3 mt-3 mb-sm-0">
-                            <label class="mb-2">ระดับการศึกษา (หลักสูตรวิชา)</label>
-
-                                <input class="form-control "  id="depart_id" name="depart_id" hidden  value="{{$edu->depart_id}}">
-                                <input class="form-control "  id="depart_id" value="{{$edu->depart->degree_fullName}}  ({{$edu->depart->depart_fullName}})" disabled>
+                        <div class="form-group">
+                            <label for=" departName"  class="form-label">ชื่อสาขา/หลักสูตร</label>
+                            <input type="text"
+                                class="form-control " placeholder="หลักสูตร" name="departName"
+                                value="{{ $edu->departName  }}">
                         </div>
-                        <!-- depart -->
                         <!-- depart -->
                         <div class="col-sm-12 mb-3 mt-3 mb-sm-0">
                             <label class="mb-2">รหัสนักศึกษา</label>
@@ -91,6 +76,7 @@
 
                     <div class="card-footer">
                         <button type="submit" class="btn btn-primary">บันทึก</button>
+                        <a class="btn btn-secondary  float-right" href="{{ route('profile.myEducation') }}">กลับ</a>
                     </div>
                 </form>
             </div>

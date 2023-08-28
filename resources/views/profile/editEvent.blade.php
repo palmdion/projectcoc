@@ -10,22 +10,18 @@
     <div class=" mb-4">
         <h1 id="textL" class="h3 mb-0">แก้ไขกิจกรรม</h1>
     </div>
+    <div id="line"></div>
 
-
+    <br>
 
     <!-- Alert Messages -->
     @include('admin.alert')
 
-    <div id="line"></div>
-
-    <br>
     <!-- ข้อมูลอีเว้นท์-->
     <div class="container-fluid">
-        <!-- Alert Messages -->
-        @include('admin.alert')
         <div class="card">
             <div class="card-body ">
-                <form action="{{ route('event.update', $event->id) }}" method="POST" enctype="multipart/form-data">
+                <form action="{{ route('profile.updateEvent', $event->id) }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     @method('PUT')
                     <div class="card-body">
@@ -78,7 +74,7 @@
                             </div>
                             <!-- END Image -->
                             <!-- Image Multiple-->
-                            <div class="col-md-8">
+                            <div class="col-md-">
                                 <br>
                                 <label for="event_image_multiple" class="form-label">อัลบั้มรูปกิจกรรม</label>
                                 <input class="form-control " type="file" name="event_image_multiple[]" id="event_image_multiple[]"
@@ -86,10 +82,10 @@
                                 <br>
                                 <input type="hidden" id="list_delete" name="list_delete" value="">
                                 <br>
-                                <div class="d-flex gap-2">
+                                <div class="d-flex">
                                     @foreach ($event->attachments as $attachment)
-                                        <div>
-                                            <div>
+                                        <div class="">
+                                            <div class="">
                                                 <img class="deleteMe" src="{{ asset($attachment->path) }}"
                                                     onClick="delPhoto({{ $attachment->id }})" id="{{ $attachment->id }}"
                                                     class="rounded" height="200px" width="auto">
@@ -100,13 +96,18 @@
                             </div>
                             <!-- END Image Multiple -->
 
-                            <!-- Description-->
-                            <div class="col-sm-12 mb-3 mt-3 ">
-                                <div class="form-group">
-                                    <label class="mb-1" for="description">Description</label>
-                                    <textarea class="form-control" style="height:150px" name="description" placeholder="Description">{{ $event->description }}</textarea>
-                                </div>
+                             <!-- Description -->
+                             <div >
+                                <label for="description" class="form-label">อธิบายรายละเอียด</label>
+                                <textarea id="summernote" class="form-control" style="height:200px" name="description" placeholder="อธิบายกิจกรรม" >{!! $event->description !!}</textarea>
                             </div>
+                            <script>
+                                $('#summernote').summernote({
+                                    placeholder: 'อธิบายรายละเอียด',
+                                    tabsize: 2,
+                                    height: 100
+                                });
+                            </script>
                             <!-- END Description -->
                         </div>
                         <br>

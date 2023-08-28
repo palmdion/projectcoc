@@ -23,6 +23,7 @@ return new class extends Migration
             $table->string('program_name')->nullable();
             $table->string('faculty_name')->nullable();
             $table->string('admit_year')->nullable();
+            $table->tinyInteger('degree')->comment('1=ป.ตรี, 2=ป.โท,3=ป.เอก')->nullable();
             $table->timestamps();
         });
     }

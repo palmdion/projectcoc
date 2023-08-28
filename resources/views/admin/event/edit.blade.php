@@ -6,17 +6,18 @@
 
     <div class="container-fluid">
         <div class=" py-3">
-            <h3 id="textF">แก้ไขกิจกรรม</h3>
+            <h3 id="textF">แก้ไขข้อมูลกิจกรรม</h3>
         </div>
         <!-- Alert Messages -->
         @include('admin.alert')
+
         <div class="card">
             <div class="card-body ">
                 <form action="{{ route('event.update', $event->id) }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     @method('PUT')
                     <div class="card-body">
-                        <div class="form-group row">
+                        <div class="form-group row-cols-1">
                             <!-- Title Name -->
                             <div class="col-sm-12 mb-3 mt-3 mb-sm-0">
                                 <label class="mb-2">หัวเรื่องกิจกรรม</label>
@@ -64,39 +65,41 @@
                                 </div>
                             </div>
                             <!-- END Image -->
+
                             <!-- Image Multiple-->
-                            <div class="col-md-8">
+                            <div class="col-md-12">
                                 <br>
                                 <label for="event_image_multiple" class="form-label">อัพแกลอรี่รูปกิจกรรม</label>
                                 <input class="form-control " type="file" name="event_image_multiple[]" id="event_image_multiple[]"
                                     value="{{ old('event_gallery') }}" multiple>
                                 <br>
                                 <input type="hidden" id="list_delete" name="list_delete" value="">
-                                <br>
-                                <div class="d-flex gap-2">
-                                    @foreach ($event->attachments as $attachment)
-                                        <div>
-                                            <div>
-                                                <img class="deleteMe" src="{{ asset($attachment->path) }}"
-                                                    onClick="delPhoto({{ $attachment->id }})" id="{{ $attachment->id }}"
-                                                    class="rounded" height="200px" width="auto">
-                                            </div>
-                                        </div>
-                                    @endforeach
-                                </div>
                             </div>
+                            <div class="col-12 d-flex gap-2 m-0 ">
+                                @foreach ($event->attachments as $attachment)
+                                            <img class="deleteMe" src="{{ asset($attachment->path) }}"
+                                                onClick="delPhoto({{ $attachment->id }})" id="{{ $attachment->id }}"
+                                                class="rounded" height="200px" width="auto">
+                                @endforeach
+                            </div>
+                            <br>
                             <!-- END Image Multiple -->
 
-                            <!-- Description-->
-                            <div class="col-sm-12 mb-3 mt-3 ">
-                                <div class="form-group">
-                                    <label class="mb-2" for="description">อธิบายรายละเอียด</label>
-                                    <textarea class="form-control" style="height:150px" name="description" placeholder="Description">{{ $event->description }}</textarea>
-                                </div>
-                            </div>
-                            <!-- END Description -->
+                           <!-- Description -->
+                           <div class="mt-3">
+                            <label for="description" class="form-label">อธิบายรายละเอียด</label>
+                            <textarea id="summernote" class="form-control" style="height:200px" name="description" placeholder="อธิบายกิจกรรม" >{!! $event->description !!}</textarea>
                         </div>
-            
+                        <script>
+                            $('#summernote').summernote({
+                                placeholder: 'อธิบายรายละเอียด',
+                                tabsize: 2,
+                                height: 100
+                            });
+                        </script>
+                        <!-- END Description -->
+                        </div>
+
                         <!-- Action -->
                     </div>
                     <div class="card-footer">

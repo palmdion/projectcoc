@@ -2,7 +2,7 @@
 
 namespace App\Imports;
 
-use App\Models\Alumni;
+use App\Models\AlumniImport as AlumniImportModel;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Maatwebsite\Excel\Concerns\ToModel;
@@ -13,13 +13,11 @@ use Maatwebsite\Excel\Concerns\WithHeadingRow;
 class AlumniImport implements
         ToModel,
         WithHeadingRow
-
-
 {
 
     public function model(array $row)
     {
-        $alumni = new Alumni([
+        $alumni = new AlumniImportModel([
             'student_code' =>  $row['studentcode'],
             'student_name_th' =>  $row['studentname'],
             'student_surname_th' =>  $row['studentsurname'],

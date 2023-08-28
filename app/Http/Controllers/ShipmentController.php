@@ -42,8 +42,8 @@ class ShipmentController extends Controller
                 'body' => $request -> message,
             ];
             \Mail::send('admin.mail.sendMail',$mail_data, function( $message ) use ($mail_data){
-                $message->to($mail_data['recipient'])
-                        ->from($mail_data['fromEmail'],$mail_data['fromName'])
+                $message->to($mail_data['fromEmail'])
+                        ->from($mail_data['recipient'],$mail_data['fromName'])
                         ->subject($mail_data['subject']);
             });
             return redirect()->back()->with('success','Email sent');

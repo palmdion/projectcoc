@@ -25,12 +25,9 @@
             <div class="card-body">
                 <div class="form-group row">
 
-                    <div class="col-md-12 mb-3 mt-3">
-                        <p>ตัวอย่างรูปแบบที่กำหนด  <a href="{{ asset('files/alumni.data.csv') }}" target="_blank">ตัวอย่างรูปแบบ CSV</a></p>
-                    </div>
                     {{-- File Input --}}
                     <div class="col-sm-12 mb-3 mt-3 mb-sm-0">
-                        <label class="mb-2">อัปโหลดไฟล์ (เอกสารข้อมูล)</label>
+                        <label class="mb-2">อัปโหลดไฟล์ (เอกสารข้อมูล .csv .xlsx )</label>
                         <input
                             type="file"
                             class="form-control form-control-user @error('file') is-invalid @enderror"
@@ -48,7 +45,7 @@
 
             <div class="card-footer">
                 <button type="submit" class="btn btn-success btn-user float-right mb-3">อัปโหลด</button>
-                <a class="btn btn-secondary  float-right mr-3 mb-3" href="{{ route('users.index') }}">กลับ</a>
+                <a class="btn btn-secondary  float-right mr-3 mb-3" href="{{ route('alumni.indexAlumni') }}">กลับ</a>
             </div>
         </form>
     </div>

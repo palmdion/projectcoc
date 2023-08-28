@@ -29,9 +29,17 @@ class User extends Authenticatable
         'status',
         'user_facebook',
         'user_linkedin',
-        'province_id',
+
 
     ];
+    // การค้นหาข้อมูลผู้ใช้
+    public function scopeSearch($query, $keyword)
+    {
+        return $query->where('title_name', 'like', '%' . $keyword . '%')
+                     ->orWhere('name', 'like', '%' . $keyword . '%')
+                     ->orWhere('last_name', 'like', '%' . $keyword . '%')
+                     ->orWhere('email', 'like', '%' . $keyword . '%');
+    }
 
     /**
      * The attributes that should be hidden for serialization.
@@ -62,8 +70,6 @@ class User extends Authenticatable
         return "{$this->title_name} {$this->name} {$this->last_name}";
     }
 
-
-
     public function post()
     {
         return $this->hasMany(Post::class);
@@ -92,6 +98,12 @@ class User extends Authenticatable
     {
         return $this->hasMany(Participant::class);
     }
+
+    public function userAlumni()
+    {
+        return $this->belongsTo(UserAlumni::class);
+    }
+
 }
 
 

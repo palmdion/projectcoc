@@ -46,15 +46,23 @@
                 <div class="alert alert-danger mt-1 mb-1">{{ $message }}</div>
             @enderror
         </div>
+       
         <!-- Message -->
         <div class="form-group mt-2">
-            <label class="mb-2" for="message" class="form-label">ข้อความ</label>
-            <textarea class="form-control @error('message') is-invalid @enderror"
-            style="height:150px" name="message" placeholder="Message">{{ old('message') }}</textarea>
+            <label for="message" class="form-label ">อธิบายรายละเอียด</label>
+            <textarea id="summernote" class="form-control" style="height:150px auto" name="message" placeholder="อธิบายกิจกรรม"
+                ></textarea>
             @error('message')
-                <div class="alert alert-danger mt-1 mb-1">{{ $message }}</div>
+                <span class="text-danger">{{ $message }}</span>
             @enderror
         </div>
+        <script>
+            $('#summernote').summernote({
+                placeholder: 'อธิบายรายละเอียด',
+                tabsize: 2,
+                height: 100
+            });
+        </script>
         <!-- END Message -->
         <button class="btn btn-primary mt-2" type="submit">ส่งเมล    </button>
     </form>

@@ -15,13 +15,14 @@ class RoleSeeder extends Seeder
     public function run()
     {
         Role::create([
-            'name' => 'Admin',
+            'name' => 'ผู้ดูแลระบบ',
             'guard_name' => 'web',
         ]);
 
         Role::create([
-            'name' => 'User',
+            'name' => 'สมาชิก',
             'guard_name' => 'web',
         ]);
+
     }
 }

@@ -34,8 +34,7 @@ class EducationController extends Controller
      */
     public function create()
     {
-        $department = Department::all();
-        return view('admin.education.create',compact('department') );
+        return view('admin.education.create' );
     }
 
     /**
@@ -51,7 +50,8 @@ class EducationController extends Controller
           try {
                 $education = new Education();
                 $education->user_id = Auth::id();
-                $education->depart_id = $request->depart_id;
+                $education->degreeName = $request->degreeName;
+                $education->departName = $request->departName;
                 $education->education_start = $request->education_start;
                 $education->education_end = $request->education_end;
                 $education->student_number = $request->student_number;
@@ -59,10 +59,7 @@ class EducationController extends Controller
                 $education->university = $request->university;
                 $education->save();
 
-                //ซิงค์ departments
-                $departments = $request->input('departments');
-                $education->depart()->sync($departments);
-                
+
                 return redirect()->route('education.index')->with('success','education create successfully.');
             }catch (\Throwable $th) {
                 DB::rollback();

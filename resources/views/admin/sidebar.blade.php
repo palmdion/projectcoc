@@ -11,8 +11,10 @@
 
     <!-- Nav Item - Pages Collapse Menu -->
     <li class="nav-item ">
-        <a class="nav-link" href="{{ route('users.index') }}">
+        <a class="nav-link me-2" href="{{ route('users.index') }}">
             <span>จัดการข้อมูลผู้ใช้งาน</span></a>
+        <a class="nav-link" href="{{ route('alumni.indexAlumni') }}">
+            <span>จัดการข้อมูลศิษย์เก่า</span></a>
     </li>
     <!--
     <li class="nav-item ">
@@ -33,8 +35,8 @@
     <!-- Divider -->
     <hr class="sidebar-divider">
 
-    {{--@hasrole('Admin')
-        <!-- Heading
+    @hasrole('Admin')
+
 
         <!-- Nav Item - Pages Collapse Menu -->
         <li class="nav-item ">
@@ -43,10 +45,10 @@
             <!--<a class="nav-link" href="{{ route('permissions.index') }}">
                 <span>Permissions</span></a>-->
         </li>
-        <!-- Divider
+
         <hr class="sidebar-divider d-none d-md-block">
     @endhasrole
-        --}}
+
 
        <!-- Nav Item - Pages Collapse Menu -->
     <li class="nav-item ">
@@ -72,14 +74,21 @@
         <a class="nav-link" href="{{ route('tag.index') }}">
             <span>Tags</span></a>
     </li>-->
+    <!-- Divider -->
+    <hr class="sidebar-divider">
+    <li class="nav-item ">
+        <a class="nav-link" href="{{ route('sendRequest.index') }}">
+            <span>จัดการการติดต่อ</span></a>
+    </li>
 
     <!-- Divider -->
     <hr class="sidebar-divider">
 
     <li class="nav-item ">
         <a class="nav-link" href="{{ route('mail.indexSendMail') }}">
-            <span>ส่งเมลให้ผู้ใช้งาน</span></a>
+            <span>ส่งเมลให้สมาชิก</span></a>
     </li>
+
 
     <!-- Divider -->
     <hr class="sidebar-divider">

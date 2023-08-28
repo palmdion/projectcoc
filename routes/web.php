@@ -16,6 +16,8 @@ use App\Http\Controllers\CalendarController;
 use App\Http\Controllers\ShipmentController;
 use App\Http\Controllers\AlumniController;
 use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\SendRequestController;
+
 
 
 
@@ -43,9 +45,7 @@ Route::get('/management-admin', function () {
 Route::get('/mainPost', function () {
     return view('post.posts');
 });
-Route::get('/dashboard', function () {
-    return view('admin.dashboard');
-});
+
 Route::get('/404', function () {
     return view('test');
 });
@@ -75,8 +75,27 @@ Route::prefix('recognition')->name('recognition.')->group(function(){
     Route::get('/mainUser', [HomeController::class, 'showAllUser'])->name('showAllUser');
 });
 
+// Search Alumni
+Route::prefix('search')->name('search.')->group(function(){
+    Route::get('/SearchAlumni', [HomeController::class, 'indexSearch'])->name('indexSearch');
+});
+
 
 Auth::routes();
+
+
+
+
+//send request
+Route::middleware('auth')->prefix('sendRequest')->name('sendRequest.')->group(function(){
+    Route::get('/indexRequest', [SendRequestController::class, 'indexRequest'])->name('indexRequest');
+    Route::post('/sendRequest', [SendRequestController::class, 'sendRequest'])->name('sendRequest');
+    Route::get('/indexsendRequest', [SendRequestController::class, 'index'])->name('index');
+    Route::get('/editsendRequest', [SendRequestController::class, 'edit'])->name('edit');
+    Route::put('/updatesendRequest', [SendRequestController::class, 'update'])->name('update');
+    Route::get('/showsendRequest/{id}', [SendRequestController::class, 'show'])->name('show');
+    Route::delete('/deletesendRequest/{id}', [SendRequestController::class, 'delete'])->name('delete');
+});
 
 Route::get('/', [App\Http\Controllers\HomeController::class, 'indexHome'])->name('home');
 
@@ -89,10 +108,16 @@ Route::prefix('profile')->name('profile.')->middleware('auth')->group(function()
     Route::post('/add-education', [AlumniController::class, 'addEducation'])->name('addEducation');
     Route::post('/add-work', [AlumniController::class, 'addWork'])->name('addWork');
 
+    //Education
+    Route::get('/editEducation', [UserController::class, 'editEducation'])->name('editEducation');
+    Route::get('/myEducation', [UserController::class, 'myEducation'])->name('myEducation');
     Route::delete('/deleteEdu/{id}', [AlumniController::class, 'deleteEdu'])->name('deleteEdu');
     Route::get('/editEdu/{id}', [AlumniController::class, 'editEdu'])->name('editEdu');
     Route::put('/updateEdu/{edu}', [AlumniController::class, 'updateEdu'])->name('updateEdu');
 
+    //Work
+    Route::get('/addWork', [UserController::class, 'proEditWork'])->name('proEditWork');
+    Route::get('/myWork', [UserController::class, 'myWork'])->name('myWork');
     Route::delete('/deleteWork/{id}', [AlumniController::class, 'deleteWork'])->name('deleteWork');
     Route::get('/editWork/{id}', [AlumniController::class, 'editWork'])->name('editWork');
     Route::put('/updateWork/{Work}', [AlumniController::class, 'updateWork'])->name('updateWork');
@@ -100,14 +125,22 @@ Route::prefix('profile')->name('profile.')->middleware('auth')->group(function()
     Route::get('/manageProfile', [UserController::class, 'manageProfile'])->name('manageProfile');
     Route::post('/change-password', [HomeController::class, 'changePassword'])->name('change-password');
     Route::post('/updateProfile', [UserController::class, 'updateProfile'])->name('updateProfile');
+    //Post
     Route::get('/myPosts', [UserController::class, 'myPosts'])->name('myPosts');
+    Route::get('/addPost', [UserController::class, 'addPost'])->name('addPost');
+    Route::post('/postStore', [UserController::class, 'postStore'])->name('postStore');
     Route::get('/editPost{id}', [UserController::class, 'editPost'])->name('editPost');
     Route::put('/updatePost/{id}', [UserController::class, 'updatePost'])->name('updatePost');
     Route::delete('/deletePost/{id}', [UserController::class, 'deletePost'])->name('deletePost');
+    //Event
     Route::get('/myEvent', [UserController::class, 'myEvent'])->name('myEvent');
+    Route::get('/addEvent', [UserController::class, 'addEvent'])->name('addEvent');
+    Route::post('/eventStore', [UserController::class, 'eventStore'])->name('eventStore');
     Route::get('/editEvent/{id}', [UserController::class, 'editEvent'])->name('editEvent');
     Route::put('/updateEvent/{id}', [UserController::class, 'updateEvent'])->name('updateEvent');
     Route::delete('/deleteEvent/{id}', [UserController::class, 'deleteEvent'])->name('deleteEvent');
+    Route::get('/eventApprove/{id}', [UserController::class, 'eventApprove'])->name('eventApprove');
+    Route::get('/eventApprove/status/{user_event_id}/{status}', [UserController::class, 'updateStatusEvent'])->name('updateStatusEvent');
 });
 
 // Roles
@@ -115,6 +148,11 @@ Route::resource('roles', App\Http\Controllers\RolesController::class);
 
 // Permissions
 Route::resource('permissions', App\Http\Controllers\PermissionsController::class);
+
+// Dashboard
+Route::middleware('auth')->name('admin.dashboard')->group(function(){
+    Route::get('/dashboard', [UserController::class, 'dashboard'])->name('dashboard');
+});
 
 // Users
 Route::middleware('auth')->prefix('user')->name('users.')->group(function(){
@@ -133,9 +171,25 @@ Route::middleware('auth')->prefix('user')->name('users.')->group(function(){
 
     Route::get('/import-alumni', [AlumniController::class, 'importAlumni'])->name('importAlumni');
     Route::post('/upload-alumni', [AlumniController::class, 'uploadAlumni'])->name('uploadAlumni');
+
+    Route::get('/SearchUsers', [UserController::class, 'searchUser'])->name('searchUser');
 });
 
+// Alumni
+Route::middleware('auth')->prefix('alumni')->name('alumni.')->group(function(){
+    Route::get('/', [AlumniController::class, 'indexAlumni'])->name('indexAlumni');
+    Route::get('/edit/{alumni}', [AlumniController::class, 'editAlumni'])->name('editAlumni');
+    Route::put('/update/{alumni}', [AlumniController::class, 'update'])->name('update');
+    Route::get('/showAlumni/{alumni}', [AlumniController::class, 'showAlumni'])->name('showAlumni');
 
+    Route::get('/import-alumni', [AlumniController::class, 'importAlumni'])->name('importAlumni');
+    Route::post('/upload-alumni', [AlumniController::class, 'uploadAlumni'])->name('uploadAlumni');
+
+    Route::delete('/delete-alumni-pre/{id}', [AlumniController::class, 'deleteAlumniPre'])->name('deleteAlumniPre');
+    Route::post('/addAlumni', [AlumniController::class, 'addAlumni'])->name('addAlumni');
+
+    Route::get('/SearchAlumnis', [AlumniController::class, 'searchAlumni'])->name('searchAlumni');
+});
 
 //Education
 Route::middleware('auth')->prefix('education')->name('education.')->group(function(){
@@ -196,6 +250,8 @@ Route::middleware('auth')->prefix('event')->name('event.')->group(function(){
     Route::delete('/delete/{id}', [CalendarController::class, 'delete'])->name('delete');
 
     Route::post('/joinEvent', [CalendarController::class, 'joinEvent'])->name('joinEvent');
+
+    Route::get('export/{event}', [CalendarController::class, 'export'])->name('export');
 });
 
 //Send Mail

@@ -54,7 +54,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <title>{{ ('COC Alumni Admin') }} | @yield('title')</title>
-    <link rel="shortcut icon" href="{{ asset('admin1/image/iconLogo.png') }}" type="image/x-icon">
+    <link rel="shortcut icon" href="{{ asset('admin/image/iconLogo.png') }}" type="image/x-icon">
 
     <!--<script src="{{ asset('admin1/js/bootstrap.min.js') }}"></script>-->
 
@@ -68,6 +68,19 @@
 
      @vite(['resources/js/app.js'])
 
+     <script src="https://code.jquery.com/jquery-3.5.1.min.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.20/summernote-bs5.min.css" integrity="sha512-ngQ4IGzHQ3s/Hh8kMyG4FC74wzitukRMIcTOoKT3EyzFZCILOPF0twiXOQn75eDINUfKBYmzYn2AA8DkAk8veQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.20/summernote-bs5.min.js" integrity="sha512-6F1RVfnxCprKJmfulcxxym1Dar5FsT/V2jiEUvABiaEiFWoQ8yHvqRM/Slf0qJKiwin6IDQucjXuolCfCKnaJQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<style>
+    .description-cell {
+    max-width: 150
+    }
+</style>
 
 </head>
 

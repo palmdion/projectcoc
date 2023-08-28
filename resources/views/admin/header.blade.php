@@ -14,21 +14,21 @@
                     data-bs-toggle="dropdown"
                     aria-haspopup="true" aria-expanded="false" v-pre>
                     <span class=" text-gray-100 mb-0 px-2">{{ Auth::user()->name }}</span>
-                    <img class="rounded-circle" width="30px" height="30px" src="{{asset(Auth::user()->user_image)}}" alt="">
+                    {{-- <img class="rounded-circle" width="30px" height="30px" src="{{asset(Auth::user()->user_image)}}" alt=""> --}}
                 </a>
                 <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                    @hasrole('Admin')
+                    @hasrole(1)
                     <a class=" dropdown-item" href="{{ route('home') }}">
-                        {{ __('Home WebSite') }}
+                        {{ __('หน้าหลักผู้ใช้') }}
                     </a>
                     @endhasrole
                     <a class="dropdown-item" href="{{ route('profile.profileFace') }}">
-                        {{ __('Profile') }}
+                        {{ __('โปรไฟล์ผู้ใช้') }}
                     </a>
                     <a class="dropdown-item text-danger" href="{{ route('logout') }}"
                     onclick="event.preventDefault();
                                     document.getElementById('logout-form').submit();">
-                        {{ __('Logout') }}
+                        {{ __('ออกจากระบบ') }}
                     </a>
 
                     <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
