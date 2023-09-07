@@ -21,11 +21,10 @@ class AdminSeeder extends Seeder
         $user = User::create([
             'name'    => 'Administrator',
             'last_name'     => 'admin',
-            'email'         =>  'admin@gmail.com',
-            'mobile_number' =>  '0986258123',
+            'email'         =>  'alumnicoc.2023@gmail.com',
+            'mobile_number' =>  '....',
             'password'      =>  Hash::make('12345678'),
             'role_id'       => 1 ,
-            'status'       => 1 ,
         ]);
     }
 }

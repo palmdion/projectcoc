@@ -48,8 +48,8 @@
                 @forelse($post as $postNews)
                 <div class="mt-5" >
                     <div class="card border-0">
-                        <a href=""><img src="{{asset($postNews->post_image)}}"class="card-img-top shadow-sm w-100" alt=""></a>
-                        <a style="color: #0F75BC" class="nav-link tretched-link" href= "{{ route('postHome.showPost',$postNews->id) }}">
+                        <a href=""><img  src="{{asset($postNews->post_image)}}"class="card-img-top shadow-sm w-100 " alt=""></a>
+                        <a style="color: #0F75BC" class="nav-link stretched-link" href= "{{ route('postHome.showPost',$postNews->id) }}">
                             <p class="mt-2 fw-semibold text-truncate">{{ $postNews->post_title }}</p>
                         </a>
                     </div>

@@ -5,6 +5,9 @@
 @section('content')
 
     <div class="container-fluid">
+    <div class="card-header py-3">
+        <h2 class="m-0 font-weight-bold" id="textF">เพิ่มข่าวสาร</h2>
+    </div>
 
         <!-- Alert Messages -->
         @include('admin.alert')

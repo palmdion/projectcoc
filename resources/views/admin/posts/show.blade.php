@@ -10,18 +10,11 @@
     <br>
     <br>
     <div class="card mb-3">
-        <img  src="{{asset($posts->post_image)}}" class="card-img-top" alt="...">
+        <img  height="400px" src="{{asset($posts->post_image)}}" class="card-img-top" alt="...">
         <div class="card-body">
           <h5 class="card-title">{{ $posts->post_title }}</h5>
           <p class="card-text">{!! $posts->description !!}</p>
           <p class="card-text"><small class="text-muted">{{ $posts->category ? $posts->category->pluck('cate_name')->first() : 'N/A' }}</small></p>
-          <p class="card-text ">
-                <div class="d-flex ">
-                    @foreach ($posts->tag as $tag )
-                    <p class="text-muted p-2">#{{ $tag->tag_name}}</p>
-                    @endforeach
-                </div>
-            </p>
         </div>
     </div>
 

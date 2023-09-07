@@ -106,7 +106,7 @@ Route::prefix('profile')->name('profile.')->middleware('auth')->group(function()
 
     Route::post('/verify-alumni', [AlumniController::class, 'verifyAlumni'])->name('verifyAlumni');
     Route::post('/add-education', [AlumniController::class, 'addEducation'])->name('addEducation');
-    Route::post('/add-work', [AlumniController::class, 'addWork'])->name('addWork');
+
 
     //Education
     Route::get('/editEducation', [UserController::class, 'editEducation'])->name('editEducation');
@@ -117,6 +117,7 @@ Route::prefix('profile')->name('profile.')->middleware('auth')->group(function()
 
     //Work
     Route::get('/addWork', [UserController::class, 'proEditWork'])->name('proEditWork');
+    Route::post('/add-work', [AlumniController::class, 'addWork'])->name('addWork');
     Route::get('/myWork', [UserController::class, 'myWork'])->name('myWork');
     Route::delete('/deleteWork/{id}', [AlumniController::class, 'deleteWork'])->name('deleteWork');
     Route::get('/editWork/{id}', [AlumniController::class, 'editWork'])->name('editWork');

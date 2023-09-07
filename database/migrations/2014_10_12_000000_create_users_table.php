@@ -22,7 +22,7 @@ return new class extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->integer('role_id')->comment('1=Admin ,2=member')->default(2);
-            $table->tinyInteger('status')->comment('1=active, 0=inactive,')->default(1);
+            //$table->tinyInteger('status')->comment('1=active, 0=inactive,')->default(1);
             $table->string('mobile_number')->nullable();
             $table->date('birthdate')->nullable();
             $table->string('gender')->nullable();

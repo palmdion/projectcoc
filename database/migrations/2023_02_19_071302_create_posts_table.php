@@ -43,22 +43,22 @@ return new class extends Migration
             $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');
         });
 
-        Schema::create('tags', function (Blueprint $table) {
-            $table->id();
-            $table->string('tag_name');
-            $table->text('description');
-            $table->timestamps();
-        });
+        // Schema::create('tags', function (Blueprint $table) {
+        //     $table->id();
+        //     $table->string('tag_name');
+        //     $table->text('description');
+        //     $table->timestamps();
+        // });
 
-        Schema::create('post_tag', function (Blueprint $table) {
-            $table->id();
-            $table->unsignedBigInteger('post_id');
-            $table->unsignedBigInteger('tag_id');
-            $table->timestamps();
+        // Schema::create('post_tag', function (Blueprint $table) {
+        //     $table->id();
+        //     $table->unsignedBigInteger('post_id');
+        //     $table->unsignedBigInteger('tag_id');
+        //     $table->timestamps();
 
-            $table->foreign('post_id')->references('id')->on('posts')->onDelete('cascade');
-            $table->foreign('tag_id')->references('id')->on('tags')->onDelete('cascade');
-        });
+        //     $table->foreign('post_id')->references('id')->on('posts')->onDelete('cascade');
+        //     $table->foreign('tag_id')->references('id')->on('tags')->onDelete('cascade');
+        // });
     }
 
     /**
@@ -71,7 +71,7 @@ return new class extends Migration
         Schema::dropIfExists('posts');
         Schema::dropIfExists('categories');
         Schema::dropIfExists('category_post');
-        Schema::dropIfExists('tags');
-        Schema::dropIfExists('post_tag');
+        // Schema::dropIfExists('tags');
+        // Schema::dropIfExists('post_tag');
     }
 };

@@ -60,7 +60,7 @@
                                                 ลบ
                                             </button>
                                         </form>
-                                        <div class="mt-3">
+                                        {{-- <div class="mt-3">
                                                 @csrf
                                                 <button  type="button" class="btn btn-outline-primary " data-bs-toggle="modal"
                                                     data-bs-target="#user_event">
@@ -112,7 +112,7 @@
                                                     </div>
                                                 </div>
                                             </form>
-                                        </div>
+                                        </div> --}}
                                         <a href="{{ route('event.export', ['event' => $event->id]) }}" class="btn  btn-success m-1">
                                             Export
                                        </a>

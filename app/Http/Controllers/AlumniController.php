@@ -146,10 +146,10 @@ class AlumniController extends Controller
                 $education->university = $request->university;
                 $education->save();
 
-                return redirect()->route('profile.manageProfile')->with('success','education update successfully.');
+                return redirect()->route('profile.myEducation')->with('success','education edit successfully.');
             }catch (\Throwable $th) {
                 DB::rollback();
-                return redirect()->route('profile.manageProfile')->with('error',$th->getMessage());
+                return redirect()->route('profile.editEducation')->with('error',$th->getMessage());
             }
     }
     public function deleteEdu(Education $education,$id)
@@ -175,17 +175,17 @@ class AlumniController extends Controller
                 $work->save();
 
 
-                return redirect()->route('profile.manageProfile')->with('success','Work update successfully.');
+                return redirect()->route('profile.myWork')->with('success','Work edit successfully.');
             }catch (\Throwable $th) {
                 DB::rollback();
-                return redirect()->route('profile.manageProfile')->with('error',$th->getMessage());
+                return redirect()->route('profile.editwork')->with('error',$th->getMessage());
             }
     }
     public function deleteWork(Work $work,$id)
     {
         $work->delete();
         $delete = Work::find($id)->delete();
-        return redirect()->route('profile.manageProfile')->with('success','Work deleted successfully.');
+        return redirect()->route('profile.myWork')->with('success','Work deleted successfully.');
     }
 
     public function addWork(Request $request){
@@ -196,7 +196,7 @@ class AlumniController extends Controller
         $work->company_name = $request->name_company;
         $work->save();
 
-        return redirect()->route('profile.manageProfile')->with('success', 'Add Work Successfully');
+        return redirect()->route('profile.myWork')->with('success', 'Add Work Successfully');
     }
 
     public function indexAlumni()

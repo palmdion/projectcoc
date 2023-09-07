@@ -86,7 +86,7 @@
 
     <li class="nav-item ">
         <a class="nav-link" href="{{ route('mail.indexSendMail') }}">
-            <span>ส่งเมลให้สมาชิก</span></a>
+            <span>ส่งอีเมล</span></a>
     </li>
 
 

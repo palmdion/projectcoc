@@ -65,7 +65,7 @@
                         <tbody>
                             @foreach ($alumnis as $alumni)
                                 <tr>
-                                    <td>{{$alumni->id}}</td>
+                                    <td>{{$loop->iteration}}</td>
                                     <td>{{ $alumni->student_code }}</td>
                                     <td>{{ $alumni->student_name_th }}</td>
                                     <td>{{ $alumni->student_surname_th }}</td>

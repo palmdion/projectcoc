@@ -150,13 +150,13 @@ class HomeController extends Controller
             return redirect()->route('eventHome.eventAdd')->with('error',$th->getMessage());
         }
     }
-   
+
     public function showAllPost()
     {
         $posts = Post::orderBy('created_at', 'desc')->paginate(10);
         $categories = Category::all();
-        $tags = Tag::all();
-        return view('post.posts',['categories' => $categories ,'tags' => $tags,'posts' => $posts]);
+
+        return view('post.posts',['categories' => $categories ,'posts' => $posts]);
     }
 
     public function showPost($id)
@@ -164,8 +164,8 @@ class HomeController extends Controller
         $posts = Post::find($id);
         $post = Post::orderBy('created_at', 'desc')->take(5)->get();
         $categories = Category::all();
-        $tags = Tag::all();
-        return view('post.post',['categories' => $categories ,'tags' => $tags,'posts' => $posts,'post' => $post]);
+        // $tags = Tag::all();
+        return view('post.post',['categories' => $categories ,'posts' => $posts,'post' => $post]);
     }
     public function postAdd()
     {

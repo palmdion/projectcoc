@@ -629,6 +629,17 @@ class UserController extends Controller
 
     public function deleteEvent(Event $event,$id)
     {
+        $img = Event::find($id)->event_image_cover;
+        unlink($img);
+        $event->delete();
+        $eventsFind = Event::find($id);
+        if($eventsFind){
+            foreach($eventsFind->attachments as $att){
+                $att->delete();
+            }
+            $eventsFind->delete();
+        }
+
         return redirect()->route('profile.myEvent')->with('success','Event deleted successfully.');
     }
 
